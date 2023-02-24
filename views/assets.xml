@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Added assets for the frontend templates -->
+        <template id="assets_frontend_inh_contact_enhancement" inherit_id="web_editor.assets_frontend" name="Portal Assets Inh" priority="15">
+            <xpath expr="//script[last()]" position="after">
+                <!-- website shop address assets -->
+                <script type="text/javascript" src="/enhancement/static/src/js/website_sale.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

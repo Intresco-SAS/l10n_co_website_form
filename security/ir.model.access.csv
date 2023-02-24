@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_country_state_city_all,access_res_country_state_city_all,l10n_co_res_partner.model_res_country_state_city,,1,1,1,1

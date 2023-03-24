@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="partner_city_action" model="ir.actions.act_window">
+            <field name="name">City</field>
+            <field name="res_model">res.country.state.city</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help">Create a new partner city</field>
+        </record>
+
+        <!-- Menu: City -->
+        <menuitem
+            name="City"
+            id="menu_partner_city_enh"
+            parent="contacts.menu_country_state_partner"
+            action="partner_city_action"
+        />
+    </data>
+</odoo>

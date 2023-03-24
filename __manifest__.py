@@ -13,7 +13,9 @@
     'data': [
         'security/ir.model.access.csv',
         'views/assets.xml',
-        'views/templates.xml',
+        'views/res_partner_view.xml',
+        'views/templates.xml'
+        
     ],
     'application': True,
 }

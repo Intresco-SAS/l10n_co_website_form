@@ -13,13 +13,14 @@ _logger = logging.getLogger(__name__)
 
 
 class WebsiteSaleInh(WebsiteSale):
-
+    """"
     def _get_mandatory_shipping_fields(self):
         return ['x_name1', 'x_lastname1', "street", "country_id", "xidentification"]
 
     def _get_mandatory_billing_fields(self):
         return ['x_name1', 'x_lastname1', "email", "street", "country_id", 'xidentification']
-     
+    """
+
     def values_postprocess(self, order, mode, values, errors, error_msg):
         new_values = {}
         authorized_fields = request.env['ir.model']._get('res.partner')._get_form_writable_fields()
@@ -58,7 +59,63 @@ class WebsiteSaleInh(WebsiteSale):
             new_values['type'] = 'delivery'
 
         return new_values, errors, error_msg
-    """""
+    """"
+    def checkout_form_validate(self, mode, all_form_values, data):
+        # mode: tuple ('new|edit', 'billing|shipping')
+        # all_form_values: all values before preprocess
+        # data: values after preprocess
+        error = dict()
+        error_message = []
+
+        # Required fields from form
+        required_fields = [f for f in (all_form_values.get(
+            'field_required') or '').split(',') if f]
+       
+        # Required fields from mandatory field function
+        required_fields += mode[1] == 'shipping' and self._get_mandatory_shipping_fields(
+        ) or self._get_mandatory_billing_fields()
+        
+        # Check if state required
+        country = request.env['res.country']
+        if data.get('country_id'):
+            country = country.browse(int(data.get('country_id')))
+            if 'state_code' in country.get_address_fields() and country.state_ids:
+                required_fields += ['state_id']
+
+        # error message for empty required fields
+        for field_name in required_fields:
+            if not data.get(field_name):
+                error[field_name] = 'missing'
+        
+        # email validation
+        if data.get('email') and not tools.single_email_re.match(data.get('email')):
+            error["email"] = 'error'
+            error_message.append(
+                _('Invalid Email! Please enter a valid email address.'))
+
+        # vat validation
+        Partner = request.env['res.partner']
+        if data.get("vat") and hasattr(Partner, "check_vat"):
+            if data.get("country_id"):
+                data["vat"] = Partner.fix_eu_vat_number(
+                    data.get("country_id"), data.get("vat"))
+            partner_dummy = Partner.new({
+                'vat': data['vat'],
+                'country_id': (int(data['country_id'])
+                               if data.get('country_id') else False),
+            })
+            try:
+                partner_dummy.check_vat()
+            except ValidationError:
+                error["vat"] = 'error'
+
+        if [err for err in error.values() if err == 'missing']:
+            error_message.append(_('Some required fields are empty.'))
+
+        return error, error_message
+
+
+   
     @http.route(['/shop/address'], type='http', methods=['GET', 'POST'], auth="public", website=True, sitemap=False)
     def address(self, **kw):
         Partner = request.env['res.partner'].with_context(
@@ -188,4 +245,6 @@ class WebsiteSaleInh(WebsiteSale):
         return dict(
             states=[(st.id, st.name) for st in state.get_website_sale_states_city(mode=mode)]
         )
+    
+    
     

@@ -1,4 +1,4 @@
-odoo.define('enhancement.website_sale', function (require) {
+odoo.define('l10n_co_website_form.website_sale', function (require) {
 'use strict';
 
 var core = require('web.core');

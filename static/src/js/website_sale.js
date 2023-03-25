@@ -129,12 +129,12 @@ sAnimations.registry.WebsiteSale.include({
 
             // manage fields order / visibility
             if (data.fields) {
-             //   if ($.inArray('zip', data.fields) > $.inArray('city', data.fields)){
-               //     $(".div_zip").before($(".div_city"));
-               // } else {
-               //     $(".div_zip").after($(".div_city"));
-               // }
-                var all_fields = ["street", "zip","city", "country_name"]; // ,"state_id"];
+                if ($.inArray('zip', data.fields) > $.inArray('city', data.fields)){
+                    $(".div_zip").before($(".div_city"));
+                } else {
+                    $(".div_zip").after($(".div_city"));
+                }
+                var all_fields = ["street", "zip", "city", "country_name"]; // "state_code"];
                 _.each(all_fields, function (field) {
                     $(".checkout_autoformat .div_" + field.split('_')[0]).toggle($.inArray(field, data.fields)>=0);
                 });

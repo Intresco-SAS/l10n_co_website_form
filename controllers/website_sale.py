@@ -15,13 +15,13 @@ _logger = logging.getLogger(__name__)
 
 
 class WebsiteSaleInh(WebsiteSale):
-   
+    """"
     def _get_mandatory_shipping_fields(self):
         return ['x_name1', 'x_lastname1', "street", "country_id", "xidentification"]
 
     def _get_mandatory_billing_fields(self):
         return ['x_name1', 'x_lastname1', "email", "street", "country_id", 'xidentification']
-    
+    """
 
     def values_postprocess(self, order, mode, values, errors, error_msg):
         new_values = {}

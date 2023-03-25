@@ -61,7 +61,7 @@ class WebsiteSaleInh(WebsiteSale):
             new_values['type'] = 'delivery'
 
         return new_values, errors, error_msg
-    
+    """"
     def checkout_form_validate(self, mode, all_form_values, data):
         # mode: tuple ('new|edit', 'billing|shipping')
         # all_form_values: all values before preprocess
@@ -115,7 +115,7 @@ class WebsiteSaleInh(WebsiteSale):
         if [err for err in error.values() if err == 'missing']:
             error_message.append(_('Some required fields are empty.'))
 
-        return error, error_message 
+        return error, error_message """
 
 
     """"

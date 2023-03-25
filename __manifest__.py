@@ -13,7 +13,6 @@
     'data': [
         'security/ir.model.access.csv',
         'views/assets.xml',
-        'views/res_partner_view.xml',
         'views/templates.xml'
         
     ],

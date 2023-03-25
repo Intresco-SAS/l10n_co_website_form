@@ -78,11 +78,11 @@ class WebsiteSaleInh(WebsiteSale):
         ) or self._get_mandatory_billing_fields()
         
         # Check if state required
-        country = request.env['res.country']
-        if data.get('country_id'):
-            country = country.browse(int(data.get('country_id')))
-            if 'state_code' in country.get_address_fields() and country.state_ids:
-                required_fields += ['state_id']
+      #  country = request.env['res.country']
+       # if data.get('country_id'):
+        #    country = country.browse(int(data.get('country_id')))
+         #   if 'state_code' in country.get_address_fields() and country.state_ids:
+          #      required_fields += ['state_id']
 
         # error message for empty required fields
         for field_name in required_fields:
@@ -95,6 +95,7 @@ class WebsiteSaleInh(WebsiteSale):
             error_message.append(
                 _('Invalid Email! Please enter a valid email address.'))
 
+        
         # vat validation
         Partner = request.env['res.partner']
         if data.get("vat") and hasattr(Partner, "check_vat"):
@@ -114,10 +115,10 @@ class WebsiteSaleInh(WebsiteSale):
         if [err for err in error.values() if err == 'missing']:
             error_message.append(_('Some required fields are empty.'))
 
-        return error, error_message
+        return error, error_message 
 
 
-   
+    """"
     @http.route(['/shop/address'], type='http', methods=['GET', 'POST'], auth="public", website=True, sitemap=False)
     def address(self, **kw):
         Partner = request.env['res.partner'].with_context(
@@ -198,6 +199,8 @@ class WebsiteSaleInh(WebsiteSale):
                 if not errors:
                     return request.redirect(kw.get('callback') or '/shop/confirm_order')
 
+
+        
         company = request.website.company_id.sudo()
         if not def_country_id:
             def_country_id = company.partner_id.country_id
@@ -205,6 +208,7 @@ class WebsiteSaleInh(WebsiteSale):
             def_city_id = company.partner_id.xcity
         if not def_state_id:
             def_state_id = company.partner_id.state_id
+
             
         country = 'country_id' in values and values['country_id'] != '' and request.env['res.country'].browse(
             int(values['country_id']))
@@ -240,7 +244,7 @@ class WebsiteSaleInh(WebsiteSale):
             'only_services': order and order.only_services,
         }
         return request.render("website_sale.address", render_values)
-
+        """
     
     @http.route(['/shop/state_infos/<model("res.country.state"):state>'], type='json', auth="public", methods=['POST'], website=True)
     def state_infos(self, state, mode, **kw):

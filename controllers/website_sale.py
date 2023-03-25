@@ -12,14 +12,16 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 _logger = logging.getLogger(__name__)
 
 
+
+
 class WebsiteSaleInh(WebsiteSale):
-    """"
+   
     def _get_mandatory_shipping_fields(self):
         return ['x_name1', 'x_lastname1', "street", "country_id", "xidentification"]
 
     def _get_mandatory_billing_fields(self):
         return ['x_name1', 'x_lastname1', "email", "street", "country_id", 'xidentification']
-    """
+    
 
     def values_postprocess(self, order, mode, values, errors, error_msg):
         new_values = {}
@@ -59,7 +61,7 @@ class WebsiteSaleInh(WebsiteSale):
             new_values['type'] = 'delivery'
 
         return new_values, errors, error_msg
-    """"
+    
     def checkout_form_validate(self, mode, all_form_values, data):
         # mode: tuple ('new|edit', 'billing|shipping')
         # all_form_values: all values before preprocess
@@ -238,7 +240,7 @@ class WebsiteSaleInh(WebsiteSale):
             'only_services': order and order.only_services,
         }
         return request.render("website_sale.address", render_values)
-"""
+
     
     @http.route(['/shop/state_infos/<model("res.country.state"):state>'], type='json', auth="public", methods=['POST'], website=True)
     def state_infos(self, state, mode, **kw):

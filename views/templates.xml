@@ -29,7 +29,7 @@
                     </div>
                     <div class="w-100"/>
 
-                    <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-lg-12 div_street">
+                    <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-lg-6 div_street">
                         <label class="col-form-label" for="street">Dirección <span class="d-none d-md-inline"> y barrio</span></label>
                         <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="'street' in checkout and checkout['street']" />
                     </div>

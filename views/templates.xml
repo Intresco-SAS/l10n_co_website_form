@@ -18,9 +18,20 @@
                         <input type="text" name="x_lastname1" t-attf-class="form-control #{error.get('x_lastname1') and 'is-invalid' or ''}" t-att-value="'x_lastname1' in checkout and checkout['x_lastname1']" />
                     </div>
                     <div class="w-100"/>
-                    <div t-attf-class="form-group #{error.get('xidentification') and 'o_has_error' or ''} col-lg-12 "> <!-- div_city -->
+
+                    <div t-attf-class="form-group #{error.get('xidentification') and 'o_has_error' or ''} col-lg-6 "> <!-- div_city -->
                         <label class="col-form-label" for="xidentification">Número de Documento (C.C/NIT)</label>
                         <input type="number" name="xidentification" t-attf-class="form-control #{error.get('xidentification') and 'is-invalid' or ''}" t-att-value="'xidentification' in checkout and checkout['xidentification']" />
+                    </div>
+                    <div t-attf-class="form-group #{error.get('phone') and 'o_has_error' or ''} col-lg-6" id="div_phone">
+                        <label class="col-form-label" for="phone">Teléfono/Celular</label>
+                        <input type="tel" name="phone" t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" t-att-value="'phone' in checkout and checkout['phone']" />
+                    </div>
+                    <div class="w-100"/>
+
+                    <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-lg-12 div_street">
+                        <label class="col-form-label" for="street">Dirección <span class="d-none d-md-inline"> y barrio</span></label>
+                        <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="'street' in checkout and checkout['street']" />
                     </div>
                     <t t-if="mode[1] == 'billing'">
                         <div t-attf-class="form-group #{error.get('email') and 'o_has_error' or ''} col-lg-6" id="div_email">
@@ -28,15 +39,6 @@
                             <input type="email" name="email" t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}" t-att-value="'email' in checkout and checkout['email']" />
                         </div>
                     </t>
-                    <div t-attf-class="form-group #{error.get('phone') and 'o_has_error' or ''} col-lg-6" id="div_phone">
-                        <label class="col-form-label" for="phone">Teléfono/Celular</label>
-                        <input type="tel" name="phone" t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" t-att-value="'phone' in checkout and checkout['phone']" />
-                    </div>
-                    <div class="w-100"/>
-                    <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-lg-12 div_street">
-                        <label class="col-form-label" for="street">Dirección <span class="d-none d-md-inline"> y barrio</span></label>
-                        <input type="text" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="'street' in checkout and checkout['street']" />
-                    </div>
                     <!--<div t-attf-class="form-group #{error.get('street2') and 'o_has_error' or ''} col-lg-12 div_street2">
                         <label class="col-form-label label-optional" for="street2">Street 2</label>
                         <input type="text" name="street2" t-attf-class="form-control #{error.get('street2') and 'is-invalid' or ''}" t-att-value="'street2' in checkout and checkout['street2']" />

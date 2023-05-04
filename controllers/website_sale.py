@@ -15,6 +15,7 @@ _logger = logging.getLogger(__name__)
 class WebsiteSaleInh(WebsiteSale):
 
     def _get_mandatory_shipping_fields(self):
+        print("AQUI LLEGA???????????????")
         return ['x_name1', 'x_lastname1', "street", "country_id", "xidentification"]
 
     def _get_mandatory_billing_fields(self):
@@ -76,20 +77,27 @@ class WebsiteSaleInh(WebsiteSale):
         required_fields = [f for f in (all_form_values.get(
             'field_required') or '').split(',') if f]
         # Required fields from mandatory field function
+        print("HIOLAAAAAAAAAAAAAAAAAAAAAAAAA")
         required_fields += mode[1] == 'shipping' and self._get_mandatory_shipping_fields(
         ) or self._get_mandatory_billing_fields()
         # Check if state required
+        print(data['name'])
+        if data['name'] == '':
+            data['name'] = data.get('x_name1', '') + ' ' + data.get('x_name2', '') + ' ' + data.get('x_lastname1', '') + ' ' + data.get('x_lastname2', '')
+        
+        print(data, "FIELDSSSSSSSSSSSSSSSSSSSSSSSSSS")
+       
         country = request.env['res.country']
         if data.get('country_id'):
             country = country.browse(int(data.get('country_id')))
             if 'state_code' in country.get_address_fields() and country.state_ids:
                 required_fields += ['state_id']
-
+        
         # error message for empty required fields
         for field_name in required_fields:
             if not data.get(field_name):
                 error[field_name] = 'missing'
-
+        
         # # Ya no se valida porque realizara un merge con el que existe
         # # eidentification validation
         # if data.get('xidentification'):
@@ -99,14 +107,15 @@ class WebsiteSaleInh(WebsiteSale):
         #         error_message.append(
         #             _('Ya existe un usuario con el mismo número de documento en nuestra plataforma.'	          
         #                 ' Si es primera vez que se registra, comuniquese con nuestra tienda, Gracias.'))
-
+       
         # email validation
         if data.get('email') and not tools.single_email_re.match(data.get('email')):
             error["email"] = 'error'
             error_message.append(
-                _('Invalid Email! Please enter a valid email address.'))
+                _('Invalid Email! Please enter a valid email address.'))   
 
         # vat validation
+        
         Partner = request.env['res.partner']
         if data.get("vat") and hasattr(Partner, "check_vat"):
             if data.get("country_id"):
@@ -120,8 +129,8 @@ class WebsiteSaleInh(WebsiteSale):
             try:
                 partner_dummy.check_vat()
             except ValidationError:
-                error["vat"] = 'error'
-
+                error["vat"] = 'error'    
+        print(error, "ERRORES")
         if [err for err in error.values() if err == 'missing']:
             error_message.append(_('Some required fields are empty.'))
 

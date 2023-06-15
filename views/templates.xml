@@ -17,16 +17,19 @@
                         <label class="col-form-label" for="x_lastname1">Primer Apellido</label>
                         <input type="text" name="x_lastname1" t-attf-class="form-control #{error.get('x_lastname1') and 'is-invalid' or ''}" t-att-value="'x_lastname1' in checkout and checkout['x_lastname1']" />
                     </div>
+                    
                     <div class="w-100"/>
-
-                    <div t-attf-class="form-group #{error.get('xidentification') and 'o_has_error' or ''} col-lg-6 "> <!-- div_city -->
-                        <label class="col-form-label" for="xidentification">Número de Documento (C.C/NIT)</label>
-                        <input type="number" name="xidentification" t-attf-class="form-control #{error.get('xidentification') and 'is-invalid' or ''}" t-att-value="'xidentification' in checkout and checkout['xidentification']" />
-                    </div>
+                    <t t-if="mode[1] == 'billing'">
+                        <div t-attf-class="form-group #{error.get('xidentification') and 'o_has_error' or ''} col-lg-6 "> <!-- div_city -->
+                            <label class="col-form-label" for="xidentification">Número de Documento (C.C/NIT)</label>
+                            <input type="number" name="xidentification" t-attf-class="form-control #{error.get('xidentification') and 'is-invalid' or ''}" t-att-value="'xidentification' in checkout and checkout['xidentification']" />
+                        </div>
+                    </t>
                     <div t-attf-class="form-group #{error.get('phone') and 'o_has_error' or ''} col-lg-6" id="div_phone">
                         <label class="col-form-label" for="phone">Teléfono/Celular</label>
                         <input type="tel" name="phone" t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" t-att-value="'phone' in checkout and checkout['phone']" />
                     </div>
+
                     <div class="w-100"/>
 
                     <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-lg-6 div_street">

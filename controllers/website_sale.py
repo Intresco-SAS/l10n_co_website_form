@@ -2,7 +2,7 @@
 
 import logging
 from werkzeug.exceptions import Forbidden
-
+from odoo import api, fields, models
 from odoo import http
 from odoo.http import request
 from odoo.exceptions import ValidationError
@@ -16,10 +16,10 @@ class WebsiteSaleInh(WebsiteSale):
 
     def _get_mandatory_shipping_fields(self):
         print("AQUI LLEGA???????????????")
-        return ['x_name1', 'x_lastname1', "street", "country_id", "xidentification"]
+        return ['x_name1', 'x_lastname1', "street", "country_id",'xcity','state_id']
 
     def _get_mandatory_billing_fields(self):
-        return ['x_name1', 'x_lastname1', "email", "street", "country_id", 'xidentification']
+        return ['x_name1', 'x_lastname1', "email", "street", "country_id", 'xidentification', 'xcity','state_id']
     
     @http.route(['/shop/state_infos/<model("res.country.state"):state>'], type='json', auth="public", methods=['POST'], website=True)
     def state_infos(self, state, mode, **kw):
@@ -63,8 +63,20 @@ class WebsiteSaleInh(WebsiteSale):
         if mode[1] == 'shipping':
             new_values['parent_id'] = order.partner_id.commercial_partner_id.id
             new_values['type'] = 'delivery'
+            # self.xidentification = False
 
+            
         return new_values, errors, error_msg
+    #el siguiente fragmento se encarga de ocultar el campo xidentification en el formulario de envio, ya que no es necesario
+
+  
+    
+    # @api.onchange('shipping')
+    # def _onchange_conditional_field(self):
+    #     if self.shipping:
+    #         self.xidentification = False
+    #     else:
+    #         self.xidentification = True
     
     def checkout_form_validate(self, mode, all_form_values, data):
         # mode: tuple ('new|edit', 'billing|shipping')
@@ -77,7 +89,7 @@ class WebsiteSaleInh(WebsiteSale):
         required_fields = [f for f in (all_form_values.get(
             'field_required') or '').split(',') if f]
         # Required fields from mandatory field function
-        print("HIOLAAAAAAAAAAAAAAAAAAAAAAAAA")
+        print("HOLAAAAAAAAAAAAAAAAAAAAAAAAA")
         required_fields += mode[1] == 'shipping' and self._get_mandatory_shipping_fields(
         ) or self._get_mandatory_billing_fields()
         # Check if state required
